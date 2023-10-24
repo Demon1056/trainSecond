@@ -1,4 +1,11 @@
-export const Contacts = ({ data, deleteContact }) => {
+import { Component } from "react";
+
+export class Contacts extends Component {
+  componentDidUpdate (){
+    localStorage.setItem("contacts", JSON.stringify(this.props.data))
+  } 
+  render(){
+    const {data, deleteContact} = this.props
   return (
     data.length > 0 && (
       <ul>
@@ -13,5 +20,5 @@ export const Contacts = ({ data, deleteContact }) => {
         ))}
       </ul>
     )
-  );
-};
+  )}
+}
