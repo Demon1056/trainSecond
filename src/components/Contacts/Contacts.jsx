@@ -1,15 +1,14 @@
-import { Component } from "react";
+import { useEffect } from 'react';
 
-export class Contacts extends Component {
-  componentDidUpdate (){
-    localStorage.setItem("contacts", JSON.stringify(this.props.data))
-  } 
-  render(){
-    const {data, deleteContact} = this.props
+export const Contacts = ({ data, deleteContact }) => {
+  useEffect(
+    () => localStorage.setItem('contacts', JSON.stringify(data)),
+    [data]
+  );
   return (
     data.length > 0 && (
       <ul>
-        {data.map(({id,name,number}) => (
+        {data.map(({ id, name, number }) => (
           <li key={id}>
             <span>{name}:</span>
             <span>{number}</span>
@@ -20,5 +19,5 @@ export class Contacts extends Component {
         ))}
       </ul>
     )
-  )}
-}
+  );
+};

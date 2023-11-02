@@ -1,4 +1,4 @@
-import { useState} from 'react';
+import { useState } from 'react';
 import { nanoid } from 'nanoid';
 
 import { Container } from './Container/Container';
@@ -7,26 +7,19 @@ import { MyForm } from './Form/Form';
 import { Filter } from './Filter/Filter';
 import { Contacts } from './Contacts/Contacts';
 
+import { getContactsFromLocaleStorage } from 'api/localeStorageApi';
+
 export const App = () => {
-  const [contacts, setContacts] = useState(()=>JSON.parse(localStorage.getItem('contacts'))??[]);
+  const [contacts, setContacts] = useState(getContactsFromLocaleStorage);
   const [filter, setFilter] = useState('');
 
-  // useEffect(() => {
-  //   const storageData = localStorage.getItem('contacts');
-  //   if (storageData) {
-  //     const parsedData = JSON.parse(storageData);
-  //     setContacts(parsedData);
-  //   }
-  // }, []);
-
   const handlerSubmit = (values, actions) => {
-    const obj = contacts.find(
+    const objContact = contacts.find(
       ({ name }) => name.toLocaleLowerCase() === values.name.toLocaleLowerCase()
     );
-    if (obj) {
+    if (objContact) {
       return alert('Is allready in phonebook');
     }
-
     const newContact = { ...values, id: nanoid() };
     setContacts(prevState => [...prevState, newContact]);
     actions.resetForm();
@@ -48,11 +41,8 @@ export const App = () => {
     );
     const updatedContacts = [...contacts];
     updatedContacts.splice(deleteIndex, 1);
-    console.log(updatedContacts);
     setContacts(updatedContacts);
   };
-
-  const filteredArray = filterContacts(filter);
 
   return (
     <Container>
@@ -61,7 +51,7 @@ export const App = () => {
       <CustomTitle text={'Contacts'} />
       <Filter value={filter} handlerInput={updateFilteredValue} />
       {contacts.length ? (
-        <Contacts data={filteredArray} deleteContact={deleteContact} />
+        <Contacts data={filterContacts(filter)} deleteContact={deleteContact} />
       ) : (
         <p>O shirt</p>
       )}
