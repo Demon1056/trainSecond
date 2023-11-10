@@ -9,6 +9,8 @@ import { Contacts } from './Contacts/Contacts';
 
 import { getContactsFromLocaleStorage } from 'api/localeStorageApi';
 
+import { appState } from 'redux/store';
+
 export const App = () => {
   const [contacts, setContacts] = useState(getContactsFromLocaleStorage);
   const [filter, setFilter] = useState('');
@@ -58,3 +60,5 @@ export const App = () => {
     </Container>
   );
 };
+
+console.log(appState);
