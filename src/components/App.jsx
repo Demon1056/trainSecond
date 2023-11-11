@@ -9,7 +9,6 @@ import { Contacts } from './Contacts/Contacts';
 
 import { getContactsFromLocaleStorage } from 'api/localeStorageApi';
 
-import { appState } from 'redux/store';
 
 export const App = () => {
   const [contacts, setContacts] = useState(getContactsFromLocaleStorage);
@@ -23,7 +22,10 @@ export const App = () => {
       return alert('Is allready in phonebook');
     }
     const newContact = { ...values, id: nanoid() };
-    setContacts(prevState => [...prevState, newContact]);
+    // setContacts(prevState => [...prevState, newContact]);
+   
+//  localStorage.setItem('contacts', JSON.stringify(data)),
+ 
     actions.resetForm();
   };
 
@@ -61,4 +63,3 @@ export const App = () => {
   );
 };
 
-console.log(appState);

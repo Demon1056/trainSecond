@@ -1,10 +1,10 @@
-import { useEffect } from 'react';
+// import { useEffect } from 'react';
 
 export const Contacts = ({ data, deleteContact }) => {
-  useEffect(
-    () => localStorage.setItem('contacts', JSON.stringify(data)),
-    [data]
-  );
+  // useEffect(
+  //   () => localStorage.setItem('contacts', JSON.stringify(data)),
+  //   [data]
+  // );
   return (
     data.length > 0 && (
       <ul>
