@@ -1,18 +1,18 @@
-const addConstact = (contact)=>{
+export const addConstact = (contact)=>{
     return {
         type:"contacts/addConstact",
         payload: contact 
     }
 }
 
-const deleteContact = (id)=>{
+export const deleteContact = (id)=>{
     return {
         type:"contacts/deleteConstact",
         payload: id
     }
 }
 
-const setFilter = (filter)=>{
+export const changeFilter = (filter)=>{
     return {
         type:"filter/setFilter",
         payload: filter
