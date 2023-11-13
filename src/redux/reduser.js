@@ -10,7 +10,7 @@ const filterState =  ''
 const contactsReducer = (state = contactsState, action) => {
   switch (action.type) {
     case 'contacts/addConstact':
-      return [...state, ...action.payload];
+      return [...state, action.payload];
 
     case 'contacts/deleteConstact':
       const idOfDeleteContact = action.payload;
@@ -28,7 +28,7 @@ const contactsReducer = (state = contactsState, action) => {
 const filterReducer = (state = filterState, action) => {
   switch (action.type) {
     case 'filter/setFilter':
-      return { filter: action.payload };
+      return action.payload ;
     default:
       return state;
   }

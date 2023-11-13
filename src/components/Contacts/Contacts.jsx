@@ -1,18 +1,43 @@
-// import { useEffect } from 'react';
+import { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 
-export const Contacts = ({ data, deleteContact }) => {
-  // useEffect(
-  //   () => localStorage.setItem('contacts', JSON.stringify(data)),
-  //   [data]
-  // );
+import { getContacts, getFilter } from 'redux/selectors';
+import { deleteContact } from 'redux/actions';
+
+export const Contacts = () => {
+  const dispatch = useDispatch();
+
+  const contacts = useSelector(getContacts);
+  const filter = useSelector(getFilter);
+
+  const filterContacts = () => {
+    if (!filter) {
+      return contacts;
+    }
+    return contacts.filter(contact =>
+      contact.name.toLocaleLowerCase().startsWith(filter.toLocaleLowerCase())
+    );
+  };
+
+  const filteredContacts = filterContacts();
+
+  const deleteCont = e => {
+    const idOfDeleteContact = e.target.dataset.id;
+    dispatch(deleteContact(idOfDeleteContact));
+  };
+
+  useEffect(() => {
+    localStorage.setItem('contacts', JSON.stringify(contacts));
+  }, [contacts]);
+
   return (
-    data.length > 0 && (
+    contacts.length > 0 && (
       <ul>
-        {data.map(({ id, name, number }) => (
+        {filteredContacts.map(({ id, name, number }) => (
           <li key={id}>
             <span>{name}:</span>
             <span>{number}</span>
-            <button type="button" data-id={id} onClick={deleteContact}>
+            <button type="button" data-id={id} onClick={deleteCont}>
               delete
             </button>
           </li>
