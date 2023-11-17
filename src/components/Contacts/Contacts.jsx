@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+
 import { useSelector, useDispatch } from 'react-redux';
 
 import { getContacts, getFilter } from 'redux/selectors';
@@ -25,11 +25,6 @@ export const Contacts = () => {
     const idOfDeleteContact = e.target.dataset.id;
     dispatch(deleteContact(idOfDeleteContact));
   };
-
-  useEffect(() => {
-    localStorage.setItem('contacts', JSON.stringify(contacts));
-  }, [contacts]);
-
   return (
     contacts.length > 0 && (
       <ul>
