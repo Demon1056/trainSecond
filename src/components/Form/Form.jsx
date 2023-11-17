@@ -1,7 +1,7 @@
 
 import { nanoid } from 'nanoid';
 import { useDispatch, useSelector } from 'react-redux';
-import { addConstact } from 'redux/actions';
+import { addConstact } from 'redux/slices/contactsSlice';
 import { getContacts } from 'redux/selectors';
 import { Formik, Form } from 'formik';
 
