@@ -1,37 +1,21 @@
-import { useDispatch, useSelector } from 'react-redux';
-
+import { Routes, Route } from "react-router-dom";
 import { Container } from './Container/Container';
-import { CustomTitle } from './CustomTitle/CustomTitle';
-import { MyForm } from './Form/Form';
-import { Filter } from './Filter/Filter';
-import { Contacts } from './Contacts/Contacts';
-import { fetchAllContact } from 'redux/slices/operations';
-import { getContacts, getErorr, getIsLoading } from 'redux/selectors';
-import { useEffect } from 'react';
-
+import { getErorr } from 'redux/selectors';
+import { useSelector } from 'react-redux';
+import { ContactsPage } from 'pages/ContactsPage';
+import { LoginPage } from 'pages/Login';
+import { RegistrationPage } from 'pages/Registration';
+import { NotFound } from "pages/NotFound";
 export const App = () => {
-  const dispatch = useDispatch()
-  const contacts = useSelector(getContacts);
   const error = useSelector(getErorr);
-  const isLoading = useSelector(getIsLoading);
-  useEffect(()=>{dispatch(fetchAllContact())
-    
-  },[dispatch])
-  return (
-    <Container>
-      {error ? (
-        <h1>{error}</h1>
-      ) : (
-        <>
-          {' '}
-          <CustomTitle text={'PhoneBook'} />
-          <MyForm />
-          <CustomTitle text={'Contacts'} />
-          <Filter />
-          {isLoading && <h1>LOADING NOW</h1>}
-          {contacts.length || !isLoading ? <Contacts /> : <p>O shirt</p>}
-        </>
-      )}
-    </Container>
+
+  return (<Routes>
+    <Route path="/"element={<Container/>}>
+     <Route index element={error ? <h1>{error}</h1> : <ContactsPage />}/> 
+      <Route path="login" element={<LoginPage />}/>
+      <Route path="registration" element={ <RegistrationPage /> }/>
+      </Route>
+      <Route path="*" element={<NotFound/>}/>
+    </Routes>
   );
 };
