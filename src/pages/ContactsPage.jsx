@@ -19,5 +19,5 @@ export const ContactsPage = ()=>{
     <CustomTitle text={'Contacts'} />
     <Filter />
     {isLoading && <h1>LOADING NOW</h1>}
-    {contacts.length || !isLoading ? <Contacts /> : <p>O shirt</p>}</>
+    {(contacts.length && !isLoading &&<Contacts/>)||<p>You don't have any contacts</p>}</>
 }

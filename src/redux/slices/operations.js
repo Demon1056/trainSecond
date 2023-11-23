@@ -1,5 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { date } from 'yup';
 
 axios.defaults.baseURL = 'https://connections-api.herokuapp.com';
 
@@ -9,8 +10,9 @@ const resetHeader =()=> axios.defaults.headers.common.Authorization = ''
 export const fetchAllContact = createAsyncThunk(
   'contacts/fetchContacts',
   async (_, thunkAPI) => {
-    try {
+    try {console.log(new Date());
       const contacts = await axios.get('/contacts');
+      
       return contacts.data;
     } catch (e) {
       return thunkAPI.rejectWithValue(e.message);
@@ -22,7 +24,7 @@ export const addContact = createAsyncThunk(
   'contacts/addContact',
   async (contact, thunkAPI) => {
     try {
-      const response = await axios.post('/contacts', contact);
+      const response = await axios.post('/contacts', contact)
       return response.data;
     } catch (e) {
       return thunkAPI.rejectWithValue(e.message);
@@ -68,6 +70,20 @@ export const logOutOperation = createAsyncThunk('user/logOut', async (_, thunkAP
    await axios.post(`users/logout`);
     resetHeader()
     return 
+  } catch (e) {
+    return thunkAPI.rejectWithValue(e.message);
+  }
+}
+)
+export const refreshUser = createAsyncThunk('user/refresh', async (_, thunkAPI) => {
+  const {token} = thunkAPI.getState().auth
+  if (!token){return thunkAPI.rejectWithValue('Unable to fetch user');}
+  try {
+    console.log(token);
+  setHeader(token)
+   const res =await axios.get(`users/current`)
+   console.log(res.data);
+    return res.data
   } catch (e) {
     return thunkAPI.rejectWithValue(e.message);
   }

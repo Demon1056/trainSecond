@@ -1,4 +1,3 @@
-
 import { useSelector, useDispatch } from 'react-redux';
 
 import { getContacts, getFilter } from 'redux/selectors';
