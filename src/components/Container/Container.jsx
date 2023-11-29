@@ -1,24 +1,28 @@
 import { useDispatch, useSelector } from 'react-redux';
+import { NavLink, Outlet } from 'react-router-dom';
+
 import { CustomContainer } from './Container.styled';
-import { NavLink } from 'react-router-dom';
-import { Outlet } from 'react-router-dom';
+
 import { getIsLogin, getUser } from 'redux/selectors';
 import { logOutOperation } from 'redux/slices/operations';
 
 export const Container = () => {
-  const dispatch=useDispatch()
   const user = useSelector(getUser);
   const isLogin = useSelector(getIsLogin);
-  const handlerLogOut = ()=>{
-dispatch(logOutOperation())
-  }
+  const dispatch = useDispatch();
+
+  const handlerLogOut = () => {
+    dispatch(logOutOperation());
+  };
   return (
     <CustomContainer>
       {isLogin ? (
         <div>
           <p style={{ marginRight: '10px' }}>{user.name}</p>
           <p style={{ marginRight: '10px' }}>{user.email} </p>
-          <button type="button" onClick={handlerLogOut}>Press to Log Out</button>
+          <button type="button" onClick={handlerLogOut}>
+            Press to Log Out
+          </button>
         </div>
       ) : (
         <div>
@@ -41,7 +45,6 @@ dispatch(logOutOperation())
           </nav>
         </div>
       )}
-
       <Outlet />
     </CustomContainer>
   );

@@ -1,32 +1,30 @@
-
-import { nanoid } from 'nanoid';
+import { Formik, Form } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
+
 import { addContact } from 'redux/slices/operations';
 import { getContacts } from 'redux/selectors';
-import { Formik, Form } from 'formik';
+import { formSchema } from 'validation/validation';
 
 import { CustomInput, CustomErrorMessage } from './Form.styled';
 
-import { formSchema } from 'validation/validation';
- 
 export const MyForm = () => {
-  const dispatch = useDispatch()
-  const contacts = useSelector(getContacts)
-  
-  const handlerSubmit =  (values, actions) => {
-    let objContact
-    if(contacts){objContact = contacts.find(
-    ({ name }) => name.toLocaleLowerCase() === values.name.toLocaleLowerCase()
-  )}
-    
+  const dispatch = useDispatch();
+  const contacts = useSelector(getContacts);
+
+  const handlerSubmit = (values, actions) => {
+    let objContact;
+    if (contacts) {
+      objContact = contacts.find(
+        ({ name }) =>
+          name.toLocaleLowerCase() === values.name.toLocaleLowerCase()
+      );
+    }
     if (objContact) {
       return alert('Is allready in phonebook');
     }
-    const newContact = { ...values, id: nanoid() };
-     dispatch(addContact(newContact));
+    dispatch(addContact(values));
     actions.resetForm();
   };
-  
   return (
     <>
       <Formik

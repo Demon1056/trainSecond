@@ -1,5 +1,6 @@
 import { useDispatch } from 'react-redux';
 import { createUser } from 'redux/slices/operations';
+
 export const RegistrationPage = () => {
   const dispatch = useDispatch();
   const addUser = e => {

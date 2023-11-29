@@ -1,31 +1,42 @@
 import { Routes, Route } from 'react-router-dom';
-import { Container } from './Container/Container';
-import { getErorr, isUserLoading } from 'redux/selectors';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+
 import { ContactsPage } from 'pages/ContactsPage';
 import { LoginPage } from 'pages/Login';
 import { RegistrationPage } from 'pages/Registration';
 import { NotFound } from 'pages/NotFound';
-import { useEffect } from 'react';
-import { refreshUser } from 'redux/slices/operations';
 import { RestrictedRout } from './RestrictedRout/RestrictedRout';
+import { PrivateRout } from './PrivateRoute/PrivateRout';
+
+import { Container } from './Container/Container';
+
+import { isUserLoading } from 'redux/selectors';
+import { refreshUser } from 'redux/slices/operations';
+
 export const App = () => {
-  const error = useSelector(getErorr);
   const userLoading = useSelector(isUserLoading);
   const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(refreshUser());
   }, [dispatch]);
+
   return (
-    !userLoading && 
-    (
+    !userLoading && (
       <Routes>
-        <Route path="/" element={<Container />}>
-          <Route index element={error ? <h1>{error}</h1> : <ContactsPage />} />
-          <Route path="login" element={<RestrictedRout component={LoginPage}/>} />
-          <Route path="registration" element={<RestrictedRout component={RegistrationPage}/>} />
+         <Route path="/" element={<Container />}>
+         <Route index element={<PrivateRout component={ContactsPage} redirectTo={'/login'}/>}/>
+          <Route
+            path="login"
+            element={<RestrictedRout component={LoginPage} />}
+          />
+          <Route
+            path="registration"
+            element={<RestrictedRout component={RegistrationPage} />}
+          />
         </Route>
-        <Route path="*" element={<NotFound />} />
+        <Route path="*" element={<NotFound />} />   
       </Routes>
     )
   );
