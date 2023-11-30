@@ -1,8 +1,8 @@
 import { useDispatch } from 'react-redux';
 
-import { logInUser } from 'redux/slices/operations';
+import { logInUser } from 'redux/slices/auth/authOperations';
 
-export const LoginPage = () => {
+ const LoginPage = () => {
   const dispatch = useDispatch();
 
   const addUser = e => {
@@ -31,3 +31,4 @@ export const LoginPage = () => {
     </>
   );
 };
+export default LoginPage

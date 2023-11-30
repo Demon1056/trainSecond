@@ -5,10 +5,14 @@ import { CustomTitle } from 'components/CustomTitle/CustomTitle';
 import { MyForm } from 'components/Form/Form';
 import { Filter } from 'components/Filter/Filter';
 import { Contacts } from 'components/Contacts/Contacts';
-import { getContacts, getIsLoading } from 'redux/selectors';
-import { fetchAllContact } from 'redux/slices/operations';
 
-export const ContactsPage = () => {
+import {
+  getContacts,
+  getIsLoading,
+} from 'redux/slices/contacts/contactsSelectors';
+import { fetchAllContact } from 'redux/slices/contacts/contactsOperations';
+
+const ContactsPage = () => {
   const contacts = useSelector(getContacts);
   const isLoading = useSelector(getIsLoading);
   const dispatch = useDispatch();
@@ -30,3 +34,5 @@ export const ContactsPage = () => {
     </>
   );
 };
+
+export default ContactsPage

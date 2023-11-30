@@ -1,0 +1,1 @@
+export const getActionsByType = (actionsArray, type) => actionsArray.map(action => action[type]);

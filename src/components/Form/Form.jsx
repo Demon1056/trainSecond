@@ -1,8 +1,8 @@
 import { Formik, Form } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { addContact } from 'redux/slices/operations';
-import { getContacts } from 'redux/selectors';
+import { addContact } from 'redux/slices/contacts/contactsOperations';
+import { getContacts } from 'redux/slices/contacts/contactsSelectors';
 import { formSchema } from 'validation/validation';
 
 import { CustomInput, CustomErrorMessage } from './Form.styled';

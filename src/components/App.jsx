@@ -1,18 +1,19 @@
-import { Routes, Route } from 'react-router-dom';
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-
-import { ContactsPage } from 'pages/ContactsPage';
-import { LoginPage } from 'pages/Login';
-import { RegistrationPage } from 'pages/Registration';
+import { useEffect, lazy } from 'react';
 import { NotFound } from 'pages/NotFound';
 import { RestrictedRout } from './RestrictedRout/RestrictedRout';
 import { PrivateRout } from './PrivateRoute/PrivateRout';
 
 import { Container } from './Container/Container';
+import { Routes, Route } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { isUserLoading } from 'redux/slices/auth/authSelectors';
+import { refreshUser } from 'redux/slices/auth/authOperations';
 
-import { isUserLoading } from 'redux/selectors';
-import { refreshUser } from 'redux/slices/operations';
+
+const ContactsPage = lazy(() => import('../pages/ContactsPage'));
+const LoginPage = lazy(() => import('../pages/Login'));
+const RegistrationPage = lazy(() => import('../pages/Registration'));
+
 
 export const App = () => {
   const userLoading = useSelector(isUserLoading);
@@ -25,8 +26,13 @@ export const App = () => {
   return (
     !userLoading && (
       <Routes>
-         <Route path="/" element={<Container />}>
-         <Route index element={<PrivateRout component={ContactsPage} redirectTo={'/login'}/>}/>
+        <Route path="/" element={<Container />}>
+          <Route
+            index
+            element={
+              <PrivateRout component={ContactsPage} redirectTo={'/login'} />
+            }
+          />
           <Route
             path="login"
             element={<RestrictedRout component={LoginPage} />}
@@ -36,7 +42,7 @@ export const App = () => {
             element={<RestrictedRout component={RegistrationPage} />}
           />
         </Route>
-        <Route path="*" element={<NotFound />} />   
+        <Route path="*" element={<NotFound />} />
       </Routes>
     )
   );

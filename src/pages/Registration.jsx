@@ -1,8 +1,10 @@
 import { useDispatch } from 'react-redux';
-import { createUser } from 'redux/slices/operations';
+
+import { createUser } from 'redux/slices/auth/authOperations';
 
 export const RegistrationPage = () => {
   const dispatch = useDispatch();
+
   const addUser = e => {
     e.preventDefault();
     const form = document.forms['registration'];
@@ -34,3 +36,5 @@ export const RegistrationPage = () => {
     </>
   );
 };
+
+export default RegistrationPage
